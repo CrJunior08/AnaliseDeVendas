@@ -1,17 +1,25 @@
+import logging
 import os
-from dotenv import load_dotenv
 from twilio.rest import Client
+from src.utils import setup_environment
 
-load_dotenv()
+setup_environment()
 
-def enviar_sms(message_body):
-    account_sid = os.getenv('TWILIO_ACCOUNT_SID')
-    auth_token = os.getenv('TWILIO_AUTH_TOKEN')
-    client = Client(account_sid, auth_token)
+account_sid = os.getenv('TWILIO_ACCOUNT_SID')
+auth_token = os.getenv('TWILIO_AUTH_TOKEN')
 
-    message = client.messages.create(
-        to="+5511999999499",
-        from_="+12513136551",
-        body=message_body
-    )
-    print(message.sid)
+client = Client(account_sid, auth_token)
+
+def enviar_sms(to, from_, body):
+    """Envia um SMS e salva o resultado"""
+    try:
+        message = client.messages.create(
+            to=to,
+            from_=from_,
+            body=body
+        )
+        logging.info(f'SMS enviado para {to}. SID: {message.sid}')
+        return message.sid
+    except Exception as e:
+        logging.error(f'Erro ao enviar SMS: {e}')
+        raise
