@@ -8,8 +8,13 @@ def setup_environment():
 
 def setup_logging():
     """Configura o logging do aplicativo"""
+    os.makedirs('logs', exist_ok=True)
+
     logging.basicConfig(
-        filename='logs/app.log',
         level=logging.INFO,
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        handlers=[
+            logging.FileHandler('logs/app.log'),
+            logging.StreamHandler()
+        ]
     )
