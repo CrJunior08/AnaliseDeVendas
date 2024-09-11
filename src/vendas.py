@@ -16,7 +16,7 @@ def processar_vendas(caminho_arquivo):
             logging.info(f'No arquivo {caminho_arquivo}: Vendedor {vendedor} bateu a meta com {vendas} vendas.')
             
             enviar_sms(
-                to="+5511989845789",
+                to="+5511989845789-Seu-numero-aqui",
                 from_="+12513136551",
                 body=f'No mes {caminho_arquivo.split("/")[1].replace(".xlsx", "")} alguem bateu a meta. Vendedor: {vendedor}, Vendas: {vendas}'
             )
